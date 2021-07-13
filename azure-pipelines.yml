@@ -4,7 +4,7 @@ trigger:
     include:
     - master
     - release/3.x
-    
+
 pr:
   branches:
     include:
@@ -14,7 +14,7 @@ pr:
   paths:
     exclude:
     - Documentation/*
-    
+
 variables:
   # Cannot use key:value syntax in root defined variables
   - name: _TeamName
@@ -31,7 +31,7 @@ variables:
 resources:
   containers:
   - container: LinuxContainer
-    image: microsoft/dotnet-buildtools-prereqs:ubuntu-14.04-cross-0cd4667-20170319080304
+    image: mcr.microsoft.com/dotnet-buildtools/prereqs:ubuntu-14.04-cross-0cd4667-20170319080304
 
 stages:
 - stage: build
@@ -112,7 +112,7 @@ stages:
             installationPath: $(Build.SourcesDirectory)/.dotnet
         # Use utility script to run script command dependent on agent OS.
         - script: $(_Script)
-            -configuration $(_BuildConfig) 
+            -configuration $(_BuildConfig)
             -prepareMachine
             $(_InternalBuildArgs)
             $(_ValidateSdkArgs)
@@ -120,7 +120,7 @@ stages:
           displayName: Windows Build / Publish
 
         - powershell: eng\common\build.ps1
-            -configuration $(_BuildConfig) 
+            -configuration $(_BuildConfig)
             -prepareMachine
             -ci
             -test
@@ -132,7 +132,7 @@ stages:
             HelixAccessToken: $(HelixApiAccessToken)
 
         - powershell: eng\common\build.ps1
-            -configuration $(_BuildConfig) 
+            -configuration $(_BuildConfig)
             -prepareMachine
             -ci
             -test
@@ -201,7 +201,7 @@ stages:
       # Sourcelink validation isn't passing for Arcade due to some regressions. This should be
       # enabled back once this issue is resolved: https://github.com/dotnet/arcade/issues/2912
       enableSourceLinkValidation: false
-      
+
       # This is to enable SDL runs part of Post-Build Validation Stage
       SDLValidationParameters:
         enable: true
